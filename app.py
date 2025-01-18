@@ -264,7 +264,7 @@ st.sidebar.image("https://via.placeholder.com/300x100", caption="Project Banner"
 st.sidebar.markdown("---")
 
 # Load SVM model
-svm_model = pickle.load(open('../models/diabetes_model_svm.sav', 'rb'))
+svm_model = pickle.load(open('../models/diabetes_model.sav', 'rb'))
 
 # User inputs
 st.title("🌟 Welcome to the Diabetes Prediction App")
