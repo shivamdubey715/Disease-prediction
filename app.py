@@ -264,7 +264,7 @@ st.sidebar.image("https://via.placeholder.com/300x100", caption="Project Banner"
 st.sidebar.markdown("---")
 
 # Load SVM model
-
+working_dir = os.path.dirname(os.path.abspath(__file__))
 svm_model = pickle.load(open(f'{working_dir}/models/diabetes_model.sav', 'rb'))
 
 # User inputs
