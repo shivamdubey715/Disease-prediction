@@ -255,6 +255,7 @@ import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 
 # App title and sidebar
 st.set_page_config(page_title="Diabetes Prediction App", layout="wide", page_icon="🩺")
