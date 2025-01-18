@@ -1,4 +1,4 @@
-import os
+'''import os
 import pickle
 import streamlit as st
 from streamlit_option_menu import option_menu
@@ -247,4 +247,81 @@ if selected == "Parkinsons Prediction":
         else:
             parkinsons_diagnosis = "The person does not have Parkinson's disease"
 
-    st.success(parkinsons_diagnosis)
+    st.success(parkinsons_diagnosis)'''
+
+import streamlit as st
+import numpy as np
+import pandas as pd
+import pickle
+from tensorflow.keras.models import load_model
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# App title and sidebar
+st.set_page_config(page_title="Diabetes Prediction App", layout="wide", page_icon="🩺")
+st.sidebar.title("🔍 Diabetes Prediction App")
+st.sidebar.write("Developed by **Shivamkumar Dubey**")
+st.sidebar.image("https://via.placeholder.com/300x100", caption="Project Banner", use_column_width=True)
+st.sidebar.markdown("---")
+
+# Load models
+svm_model = pickle.load(open('../models/diabetes_model_svm.sav', 'rb'))
+nn_model = load_model('../models/diabetes_model_nn.h5')
+
+# User inputs
+st.title("🌟 Welcome to the Diabetes Prediction App")
+st.markdown("#### Enter your medical details below:")
+
+col1, col2 = st.columns(2)
+with col1:
+    pregnancies = st.number_input("Pregnancies", min_value=0, max_value=20, step=1)
+    glucose = st.slider("Glucose Level", 0, 200, 100)
+    blood_pressure = st.slider("Blood Pressure", 0, 150, 80)
+    skin_thickness = st.slider("Skin Thickness", 0, 100, 20)
+with col2:
+    insulin = st.slider("Insulin Level", 0, 900, 100)
+    bmi = st.number_input("BMI", min_value=0.0, max_value=70.0, step=0.1)
+    dpf = st.number_input("Diabetes Pedigree Function", min_value=0.0, max_value=2.5, step=0.01)
+    age = st.number_input("Age", min_value=0, max_value=120, step=1)
+
+# Prediction button
+if st.button("🔮 Predict Diabetes Status"):
+    input_data = np.array([pregnancies, glucose, blood_pressure, skin_thickness, insulin, bmi, dpf, age]).reshape(1, -1)
+
+    # SVM Prediction
+    svm_prediction = svm_model.predict(input_data)[0]
+    svm_result = "Diabetic" if svm_prediction == 1 else "Not Diabetic"
+
+    # NN Prediction
+    nn_prediction = nn_model.predict(input_data)[0][0]
+    nn_result = "Diabetic" if nn_prediction > 0.5 else "Not Diabetic"
+
+    # Display results
+    st.success("### Predictions:")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("SVM Model")
+        st.metric(label="Prediction", value=svm_result, delta="" if svm_result == "Not Diabetic" else "+", delta_color="inverse")
+    with col2:
+        st.subheader("Neural Network Model")
+        st.metric(label="Prediction", value=nn_result, delta="" if nn_result == "Not Diabetic" else "+", delta_color="inverse")
+
+    # Add charts
+    st.markdown("---")
+    st.header("📊 Data Insights")
+    st.write("Below are some visualizations based on the dataset used for training the models.")
+
+    # Dummy chart (replace with real insights if needed)
+    pie_data = pd.DataFrame({"Class": ["Non-Diabetic", "Diabetic"], "Count": [500, 268]})
+    fig, ax = plt.subplots()
+    ax.pie(pie_data["Count"], labels=pie_data["Class"], autopct="%1.1f%%", startangle=90, colors=["#90ee90", "#ff6961"])
+    st.pyplot(fig)
+
+    # ROC Curve placeholder
+    st.subheader("ROC Curve (Sample)")
+    st.image("https://via.placeholder.com/700x400", caption="Sample ROC Curve", use_column_width=True)
+
+# Footer
+st.sidebar.markdown("---")
+st.sidebar.write("💡 **Tip**: Ensure accurate inputs for better predictions.")
+
