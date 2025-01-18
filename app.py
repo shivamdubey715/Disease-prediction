@@ -253,7 +253,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import pickle
-from tensorflow.keras.models import load_model
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -264,9 +263,8 @@ st.sidebar.write("Developed by **Shivamkumar Dubey**")
 st.sidebar.image("https://via.placeholder.com/300x100", caption="Project Banner", use_column_width=True)
 st.sidebar.markdown("---")
 
-# Load models
+# Load SVM model
 svm_model = pickle.load(open('../models/diabetes_model_svm.sav', 'rb'))
-nn_model = load_model('../models/diabetes_model_nn.h5')
 
 # User inputs
 st.title("🌟 Welcome to the Diabetes Prediction App")
@@ -292,19 +290,10 @@ if st.button("🔮 Predict Diabetes Status"):
     svm_prediction = svm_model.predict(input_data)[0]
     svm_result = "Diabetic" if svm_prediction == 1 else "Not Diabetic"
 
-    # NN Prediction
-    nn_prediction = nn_model.predict(input_data)[0][0]
-    nn_result = "Diabetic" if nn_prediction > 0.5 else "Not Diabetic"
-
     # Display results
-    st.success("### Predictions:")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.subheader("SVM Model")
-        st.metric(label="Prediction", value=svm_result, delta="" if svm_result == "Not Diabetic" else "+", delta_color="inverse")
-    with col2:
-        st.subheader("Neural Network Model")
-        st.metric(label="Prediction", value=nn_result, delta="" if nn_result == "Not Diabetic" else "+", delta_color="inverse")
+    st.success("### Prediction:")
+    st.subheader("SVM Model")
+    st.metric(label="Prediction", value=svm_result, delta="" if svm_result == "Not Diabetic" else "+", delta_color="inverse")
 
     # Add charts
     st.markdown("---")
@@ -324,4 +313,3 @@ if st.button("🔮 Predict Diabetes Status"):
 # Footer
 st.sidebar.markdown("---")
 st.sidebar.write("💡 **Tip**: Ensure accurate inputs for better predictions.")
-
