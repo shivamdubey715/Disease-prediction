@@ -425,23 +425,21 @@ if selected == "🧠 Parkinson's Prediction":
     with col2:
         PPE = st.text_input("PPE")
 
-    if st.button("Get Parkinson's Test Result"):
-        user_input = [
-            fo, fhi, flo, Jitter_percent, Jitter_Abs, RAP, PPQ, DDP,
-            Shimmer, Shimmer_dB, APQ3, APQ5, APQ, DDA, NHR, HNR,
-            RPDE, DFA, spread1, spread2, D2, PPE
-        ]
-        validated_input = validate_input(user_input)
+   if st.button("Get Parkinson's Test Result"):
+    user_input = [
+        fo, fhi, flo, Jitter_percent, Jitter_Abs, RAP, PPQ, DDP,
+        Shimmer, Shimmer_dB, APQ3, APQ5, APQ, DDA, NHR, HNR,
+        RPDE, DFA, spread1, spread2, D2, PPE
+    ]
+    validated_input = validate_input(user_input)
 
-        if validated_input and len(validated_input) == 22:
-            parkinsons_prediction = parkinsons_model.predict([validated_input])
-            if parkinsons_prediction[0] == 1:
-                st.error("🚨 The person has Parkinson's disease.")
-            else:
-                st.success("✅ The person does not have Parkinson's disease.")
+    if validated_input and len(validated_input) == 22:
+        parkinsons_prediction = parkinsons_model.predict([validated_input])
+        if parkinsons_prediction[0] == 1:
+            st.error("🚨 The person has Parkinson's disease.")
         else:
-            st.warning("⚠️ Please enter valid numeric values for all fields.")
+            st.success("✅ The person does not have Parkinson's disease.")
+    else:
+        st.warning("⚠️ Please enter valid numeric values for all fields.")
 
-
-    st.success(parkinsons_diagnosis)
 
