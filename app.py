@@ -1,4 +1,4 @@
-'''import os
+import os
 import pickle
 import streamlit as st
 from streamlit_option_menu import option_menu
@@ -247,9 +247,9 @@ if selected == "Parkinsons Prediction":
         else:
             parkinsons_diagnosis = "The person does not have Parkinson's disease"
 
-    st.success(parkinsons_diagnosis)'''
+    st.success(parkinsons_diagnosis)
 
-import streamlit as st
+'''import streamlit as st
 import numpy as np
 import pandas as pd
 import pickle
@@ -315,3 +315,4 @@ if st.button("🔮 Predict Diabetes Status"):
 # Footer
 st.sidebar.markdown("---")
 st.sidebar.write("💡 **Tip**: Ensure accurate inputs for better predictions.")
+'''
