@@ -441,4 +441,4 @@ if selected == "🧠 Parkinson's Prediction":
             st.success("✅ The person does not have Parkinson's disease.")
     else:
         st.warning("⚠️ Please enter valid numeric values for all fields.")
-    st.success(parkinsons_diagnosis)
+st.success(parkinsons_diagnosis)
