@@ -13,7 +13,7 @@ labels = {0: "Uninfected", 1: "Parasitized"}
 # Function to preprocess the uploaded image
 def preprocess_image(image):
     # Resize image to the input size of the model
-    image = image.resize((224, 224))  # Update this size based on your model input
+    image = image.resize((50, 50))  # Update this size based on your model input
     image = img_to_array(image) / 255.0  # Normalize pixel values
     image = np.expand_dims(image, axis=0)  # Add batch dimension
     return image
