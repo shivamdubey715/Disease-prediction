@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 
 # Load your trained VGG16 model
-model = load_model("model.h5")
+model = load_model("model1.h5")
 
 # Define the class labels
 labels = {0: "Uninfected", 1: "Parasitized"}
